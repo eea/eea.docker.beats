@@ -1,0 +1,2 @@
+metricbeat.modules:
+"${CONFIG}"

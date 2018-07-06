@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+
+   echo "$CONFIG" > /usr/share/metricbeat/metricbeat.yml
+
+fi
+
+cat /usr/share/metricbeat/metricbeat.yml
+
+exec /usr/local/bin/metricbeat-entrypoint "$@"

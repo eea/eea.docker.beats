@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+
+   echo "$CONFIG" > /usr/share/heartbeat/heartbeat.yml
+
+fi
+
+cat /usr/share/heartbeat/heartbeat.yml
+
+exec /usr/local/bin/heartbeat-entrypoint "$@"
