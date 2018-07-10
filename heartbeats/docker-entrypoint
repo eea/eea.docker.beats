@@ -1,10 +1,36 @@
 #!/bin/bash
 
-if [ -n "$CONFIG" ]; then
+if [ -z "${CONFIG}" ]; then
 
-   echo "$CONFIG" > /usr/share/heartbeat/heartbeat.yml
+  echo 'Please provide configuration in the $CONFIG environment variable'
+  echo 'The container cannot start without it'
+  
+  exit 1
+
+fi  
+
+
+echo "$CONFIG" > /usr/share/heartbeat/heartbeat.yml
+
+if [ -n "${ES_URL}" ] && [ $(grep -c "output.elasticsearch" /usr/share/heartbeat/heartbeat.yml )  -eq 0 ]; then
+
+    echo "output.elasticsearch:
+  hosts: [\"${ES_URL}\"]" >> /usr/share/heartbeat/heartbeat.yml
+    if [ -n "${ES_USER}" ] && [ -n "${ES_PASSWORD}" ]; then
+    echo "  username: \"${ES_USER}\"
+  password: \"${ES_PASSWORD}\" " >> /usr/share/heartbeat/heartbeat.yml
+
+   fi
+fi
+
+if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/heartbeat/heartbeat.yml )  -eq 0 ]; then
+
+    echo "setup.kibana:
+  host: \"${KIBANA_URL}\"" >> /usr/share/heartbeat/heartbeat.yml
 
 fi
+
+
 
 cat /usr/share/heartbeat/heartbeat.yml
 
