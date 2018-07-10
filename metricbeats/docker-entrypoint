@@ -6,6 +6,27 @@ if [ -n "$CONFIG" ]; then
 
 fi
 
+
+if [ -n "${ES_URL}" ] && [ $(grep -c "output.elasticsearch" /usr/share/metricbeat/metricbeat.yml )  -eq 0 ]; then
+
+    echo "output.elasticsearch:
+  hosts: [\"${ES_URL}\"]" >> /usr/share/metricbeat/metricbeat.yml
+    if [ -n "${ES_USER}" ] && [ -n "${ES_PASSWORD}" ]; then
+    echo "  username: \"${ES_USER}\"
+  password: \"${ES_PASSWORD}\" " >> /usr/share/metricbeat/metricbeat.yml
+
+   fi
+fi
+
+if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/metricbeat/metricbeat.yml )  -eq 0 ]; then
+
+    echo "setup.kibana:
+  host: \"${KIBANA_URL}\"" >> /usr/share/metricbeat/metricbeat.yml
+
+fi
+
+
 cat /usr/share/metricbeat/metricbeat.yml
+
 
 exec /usr/local/bin/metricbeat-entrypoint "$@"
