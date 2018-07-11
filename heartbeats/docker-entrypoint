@@ -1,9 +1,12 @@
 #!/bin/bash
 
-if [ -z "${CONFIG}" ]; then
+
+
+if [ -z "${CONFIG}" ] && [ ! -f "/usr/share/heartbeat/heartbeat.yml" ] ; then
 
   echo 'Please provide configuration in the $CONFIG environment variable'
-  echo 'The container cannot start without it'
+  echo 'or mount the configuration file using -v heartbeat.yml:/usr/share/heartbeat/heartbeat.yml'
+  echo 'The container cannot start without a valid configuration'
   
   exit 1
 
@@ -31,7 +34,5 @@ if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/heartbeat/hea
 fi
 
 
-
-cat /usr/share/heartbeat/heartbeat.yml
 
 exec /usr/local/bin/heartbeat-entrypoint "$@"

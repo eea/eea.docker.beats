@@ -26,7 +26,5 @@ if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/metricbeat/me
 fi
 
 
-cat /usr/share/metricbeat/metricbeat.yml
-
 
 exec /usr/local/bin/metricbeat-entrypoint "$@"
