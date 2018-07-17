@@ -12,8 +12,10 @@ if [ -z "${CONFIG}" ] && [ ! -f "/usr/share/heartbeat/heartbeat.yml" ] ; then
 
 fi  
 
+if [ -n "${CONFIG}" ]; then
+   echo "$CONFIG" > /usr/share/heartbeat/heartbeat.yml
+fi
 
-echo "$CONFIG" > /usr/share/heartbeat/heartbeat.yml
 
 if [ -n "${ES_URL}" ] && [ $(grep -c "output.elasticsearch" /usr/share/heartbeat/heartbeat.yml )  -eq 0 ]; then
 
