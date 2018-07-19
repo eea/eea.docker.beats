@@ -27,7 +27,7 @@ https://github.com/eea/eea.docker.beats/blob/master/metricbeat/metricbeat.yml
 
 ### Setting up kibana dashboards
 
-Needs to be done only once, from shell command on the container. For a kibana that runs on https:
+Needs to be done only once, from shell command on the container. For a kibana that runs on https ( ES credentials will be used for authentification ) :
 
     ./metricbeat setup -E setup.kibana.host=kibana.devel2cph.eea.europa.eu:443 -E setup.kibana.protocol="https" --dashboards
 
@@ -115,7 +115,7 @@ backend force_ssl
 5. Note the BACKEND name used by the kibana 443 service - 
 443_{REPLACE_DOTS_WITH_UNDERLINE_IN_HOST}_
 
-4. Add kibana authentification in haproxy.cfg:
+6. Add kibana authentification in haproxy.cfg:
 
 ```
 global
@@ -123,43 +123,8 @@ global
    user guest password SHA512GUESTRASS
    user rw password SHA512RWPASS
 
-backend BACKEND_
+backend 443_BACKEND_
   acl AuthOK_ES http_auth(ES)
   http-request auth realm ES if !AuthOK_ES
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
- 
