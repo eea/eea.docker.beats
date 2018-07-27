@@ -1,5 +1,6 @@
 tags: [ ]
 
+metricbeat.modules:
 - module: docker
   metricsets:
     - "container"
