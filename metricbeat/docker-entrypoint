@@ -47,6 +47,4 @@ fields:
 
 fi
 
-cat /usr/share/metricbeat/metricbeat.yml
-
 exec /usr/local/bin/metricbeat-entrypoint "$@"
