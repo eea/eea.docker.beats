@@ -29,6 +29,6 @@ if [ -n "${TAGS}" ]; then
     echo "tags: [ ${TAGS} ]"  >> /usr/share/metricbeat/metricbeat.yml
 fi
 
-
+cat /usr/share/metricbeat/metricbeat.yml
 
 exec /usr/local/bin/metricbeat-entrypoint "$@"
