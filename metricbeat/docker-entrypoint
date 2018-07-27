@@ -25,7 +25,7 @@ if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/metricbeat/me
 
 fi
 
-if [ -n "${TAGS}" ]; then
+if [ -n "${TAGS}" ] && [ $(grep -c "tags:" /usr/share/metricbeat/metricbeat.yml )  -eq 0 ]; then
     echo "tags: [ ${TAGS} ]"  >> /usr/share/metricbeat/metricbeat.yml
 fi
 
