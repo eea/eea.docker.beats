@@ -1,6 +1,6 @@
 
 
-tags: [ ${TAGS} ]
+tags: [ "${TAGS}" ]
 metricbeat.modules:
 - module: docker
   metricsets:
