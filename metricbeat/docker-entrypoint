@@ -26,7 +26,7 @@ if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/metricbeat/me
 fi
 
 if [ -n "${TAGS}" ] ; then
-    sed -i "s/^tags: .*/tags: [ ${TAGS} ]/"  >> /usr/share/metricbeat/metricbeat.yml
+    sed -i "s/^tags: .*/tags: [ ${TAGS} ]/"  /usr/share/metricbeat/metricbeat.yml
 fi
 
 if [ -n "${CHECK_INTERVAL}" ]; then
