@@ -34,7 +34,7 @@ if [ -n "${CHECK_INTERVAL}" ]; then
 fi
 
 
-if [ -n "${RANCHER}" ]; then
+if [ -n "${RANCHER_METADATA}" ]; then
 
      host=$(curl -s  http://rancher-metadata/latest/self/host/hostname)
      echo "name: $host" >> /usr/share/metricbeat/metricbeat.yml
