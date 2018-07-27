@@ -34,12 +34,10 @@ if [ -n "${CHECK_INTERVAL}" ]; then
 fi
 
 
-if [ -n "${OVERWRITE_RANCHER_HOST}" ]; then
+if [ -n "${ADD_RANCHER_HOST}" ]; then
 
      host=$(curl -s  http://rancher-metadata/latest/self/host/hostname)
-     echo "fields_under_root: true
-fields:
-  beat.hostname: $host" >> /usr/share/metricbeat/metricbeat.yml
+     echo "name: $host" >> /usr/share/metricbeat/metricbeat.yml
 fi
 
 cat /usr/share/metricbeat/metricbeat.yml
