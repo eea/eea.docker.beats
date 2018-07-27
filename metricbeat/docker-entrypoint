@@ -25,6 +25,10 @@ if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/metricbeat/me
 
 fi
 
+if [ -n "${TAGS}" ]; then
+    echo "tags: [ ${TAGS} ]"  >> /usr/share/metricbeat/metricbeat.yml
+fi
+
 
 
 exec /usr/local/bin/metricbeat-entrypoint "$@"
