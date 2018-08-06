@@ -16,3 +16,4 @@ metricbeat.modules:
   # Replace dots in labels with `_`. Set to false to keep dots
   labels.dedot: true
 
+logging.metrics.enabled: false

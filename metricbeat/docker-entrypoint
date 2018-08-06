@@ -47,4 +47,10 @@ fields:
 
 fi
 
+if [ -n "${ENABLE_METRICS_LOG}" ] && [ "${ENABLE_METRICS_LOG}" == "True" ];  then
+
+    sed 's/logging.metrics.enabled:.*/logging.metrics.enabled: true/' /usr/share/metricbeat/metricbeat.yml
+
+fi
+
 exec /usr/local/bin/metricbeat-entrypoint "$@"
