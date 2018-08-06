@@ -49,7 +49,7 @@ fi
 
 if [ -n "${ENABLE_METRICS_LOG}" ] && [ "${ENABLE_METRICS_LOG}" == "True" ];  then
 
-    sed 's/logging.metrics.enabled:.*//' /usr/share/metricbeat/metricbeat.yml
+    sed -i 's/logging.metrics.enabled:.*/logging.metrics.enabled: true/' /usr/share/metricbeat/metricbeat.yml
 
 fi
 
