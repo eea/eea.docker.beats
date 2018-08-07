@@ -24,6 +24,12 @@ https://github.com/eea/eea.docker.beats/blob/master/metricbeat/metricbeat.yml
 *   ES_USER - elasticsearch username for authentification in elasticsearch
 *   ES_PASSWORD - elasticsearch user password
 *   KIBANA_URL - kibana url, can be provided for dashboard creation, but is not necessary
+*   RANCHER_METADATA - "yes" to include information extracted from rancher metadata ( rancher.environment - environment name and beat.name - hostname of the server that has the metricbeat container)
+*   CHECK_INTERVAL - default 60s, change to modify check time
+*   TAGS - to add extra information in tag field in elasticsearch
+*   ENABLE_METRICS_LOG - false by default, to remove internal metrics from log
+*   TZ - Timezone
+
 
 ### Setting up kibana dashboards
 
@@ -127,4 +133,30 @@ backend 443_BACKEND_
   acl AuthOK_ES http_auth(ES)
   http-request auth realm ES if !AuthOK_ES
 ```
+
+### Metricbeat - rancher
+
+To prepare the deploy, you need to request access from all the hosts to the elasticsearch url.
+
+To deploy, use this template: https://github.com/eea/eea.rancher.catalog/tree/master/infra-templates/metricbeat
+
+Default values are already set in rancher, you only need to add the elasticsearch password.
+
+Upgrade/rollback is done the standard way.
+
+
+### Heartbeat - rancher
+
+You only need one container for all your monitoring.
+
+To prepare the deploy, you need to request access from the container to the elasticsearch url and the urls you will be monitoring.
+
+To deploy, use this template: https://github.com/eea/eea.rancher.catalog/tree/master/infra-templates/heartbeat
+
+You need to set the elasticsearch password, and provide the configuration. To disable logging, please include `logging.metrics.enabled: false` line in the configuration.
+
+#### Upgrade
+
+To add a new check, you will need to upgrade the stack with the new configuration. Make sure that you are saving the new configuration in the SVN.
+
 
