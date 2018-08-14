@@ -29,13 +29,10 @@ if [ -n "${RANCHER_METADATA}" ]; then
      
      get_metadata http://rancher-metadata/latest/self/stack/environment_name
      export RANCHER_ENV=$result
-     env
 fi
     
 generate_configuration.py
 
 chmod go-w /usr/share/metricbeat/metricbeat.yml
-
-cat /usr/share/metricbeat/metricbeat.yml
 
 exec /usr/local/bin/metricbeat-entrypoint "$@"
