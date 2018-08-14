@@ -25,7 +25,6 @@ https://github.com/eea/eea.docker.beats/blob/master/metricbeat/metricbeat.yml
 *   ES_PASSWORD - elasticsearch user password
 *   KIBANA_URL - kibana url, can be provided for dashboard creation, but is not necessary
 *   RANCHER_METADATA - "yes" to include information extracted from rancher metadata ( rancher.environment - environment name and beat.name - hostname of the server that has the metricbeat container)
-*   CHECK_INTERVAL - default 60s, change to modify check time
 *   TAGS - to add extra information in tag field in elasticsearch
 *   ENABLE_METRICS_LOG - false by default, to remove internal metrics from log
 *   TZ - Timezone
@@ -95,7 +94,7 @@ You can use letsencrypt rancher stack to generate them.
 
 ### LB configuration
 
-If you use letsencrypt, add the necessary LB services as specified in its documentatation.
+If you use letsencrypt, add the necessary LB services as specified in its documentation.
 
 #### Elasticsearch
 
@@ -116,6 +115,8 @@ backend force_ssl
 backend force_ssl
     redirect scheme https code 301 if ! { ssl_fc }
 ```
+#### Kibana authentification
+
 4. Create SHA512 passwords for ES write user and Kibana "guest" user
      mkpasswd -m sha-512 password
 5. Note the BACKEND name used by the kibana 443 service - 

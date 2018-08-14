@@ -29,7 +29,6 @@ if [ -n "${ES_URL}" ] && [ $(grep -c "output.elasticsearch" /usr/share/heartbeat
 fi
 
 if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/heartbeat/heartbeat.yml )  -eq 0 ]; then
-
     echo "setup.kibana:
   host: \"${KIBANA_URL}\"" >> /usr/share/heartbeat/heartbeat.yml
 
