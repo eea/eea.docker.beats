@@ -3,15 +3,29 @@ tags: [ ]
 metricbeat.modules:
 - module: docker
   metricsets:
-    - "container"
-    - "cpu"
-    - "diskio"
     - "healthcheck"
-    - "info"
-    - "memory"
+  hosts: ["unix:///var/run/docker.sock"]
+  period: 120s
+  enabled: true
+  # Replace dots in labels with `_`. Set to false to keep dots
+  labels.dedot: true
+- module: docker
+  metricsets:
+    - "diskio"
     - "network"
   hosts: ["unix:///var/run/docker.sock"]
-  period: 60s
+  period: 180s
+  enabled: true
+  # Replace dots in labels with `_`. Set to false to keep dots
+  labels.dedot: true
+- module: docker
+  metricsets:
+    - "container"
+    - "cpu"
+    - "info"
+    - "memory"
+  hosts: ["unix:///var/run/docker.sock"]
+  period: 300s
   enabled: true
   # Replace dots in labels with `_`. Set to false to keep dots
   labels.dedot: true

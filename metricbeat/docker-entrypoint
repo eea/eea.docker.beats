@@ -6,51 +6,36 @@ if [ -n "$CONFIG" ]; then
 
 fi
 
+get_metadata(){
+   
+   result='Not found' 
+   count=5
+   timeout=5
+   
+   while [ "$result" == "Not found" ] && [ $count -gt 0 ]; do
+      result=$(curl -s $1)
+      if [ "$result" == "Not found" ]; then
+        let count=$count-1
+        sleep $timeout
+      fi
+   done
 
-if [ -n "${ES_URL}" ] && [ $(grep -c "output.elasticsearch" /usr/share/metricbeat/metricbeat.yml )  -eq 0 ]; then
-
-    echo "output.elasticsearch:
-  hosts: [\"${ES_URL}\"]" >> /usr/share/metricbeat/metricbeat.yml
-    if [ -n "${ES_USER}" ] && [ -n "${ES_PASSWORD}" ]; then
-    echo "  username: \"${ES_USER}\"
-  password: \"${ES_PASSWORD}\" " >> /usr/share/metricbeat/metricbeat.yml
-
-   fi
-fi
-
-if [ -n "${KIBANA_URL}" ] && [ $(grep -c "setup.kibana" /usr/share/metricbeat/metricbeat.yml )  -eq 0 ]; then
-
-    echo "setup.kibana:
-  host: \"${KIBANA_URL}\"" >> /usr/share/metricbeat/metricbeat.yml
-
-fi
-
-if [ -n "${TAGS}" ] ; then
-    sed -i "s/^tags: .*/tags: [${TAGS}]/"  /usr/share/metricbeat/metricbeat.yml
-fi
-
-if [ -n "${CHECK_INTERVAL}" ]; then
-  sed -i "s/^  period: .*/  period: ${CHECK_INTERVAL}/" /usr/share/metricbeat/metricbeat.yml
-fi
-
+}
 
 if [ -n "${RANCHER_METADATA}" ]; then
-
-     host=$(curl -s  http://rancher-metadata/latest/self/host/hostname)
-     echo "name: $host" >> /usr/share/metricbeat/metricbeat.yml
-
-     env=$(curl -s  http://rancher-metadata/latest/self/stack/environment_name)
+     
+     get_metadata http://rancher-metadata/latest/self/host/hostname
+     export HOSTNAME=$result
+     
+     get_metadata http://rancher-metadata/latest/self/stack/environment_name
+     export RANCHER_ENV=$result
+     env
+fi
     
-     echo "fields_under_root: true
-fields:
-  rancher.environment: '$env'" >> /usr/share/metricbeat/metricbeat.yml
+generate_configuration.py
 
-fi
+chmod go-w /usr/share/metricbeat/metricbeat.yml
 
-if [ -n "${ENABLE_METRICS_LOG}" ] && [ "${ENABLE_METRICS_LOG}" == "True" ];  then
-
-    sed -i 's/logging.metrics.enabled:.*/logging.metrics.enabled: true/' /usr/share/metricbeat/metricbeat.yml
-
-fi
+cat /usr/share/metricbeat/metricbeat.yml
 
 exec /usr/local/bin/metricbeat-entrypoint "$@"
