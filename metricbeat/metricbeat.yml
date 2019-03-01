@@ -29,5 +29,17 @@ metricbeat.modules:
   enabled: true
   # Replace dots in labels with `_`. Set to false to keep dots
   labels.dedot: true
+- module: system
+  metricsets:
+    - cpu             # CPU usage
+    - load            # CPU load averages
+    - memory          # Memory usage
+    - filesystem     # File system usage for each mountpoint
+  enabled: true
+  period: 300s
+  processes: ['.*']
+  # Configure the metric types that are included by these metricsets.
+  cpu.metrics:  ["percentages"]
 
 logging.metrics.enabled: false
+
