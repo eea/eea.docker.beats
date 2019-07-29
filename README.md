@@ -27,6 +27,7 @@ https://github.com/eea/eea.docker.beats/blob/master/metricbeat/metricbeat.yml
 *   RANCHER_METADATA - "yes" to include information extracted from rancher metadata ( rancher.environment - environment name and beat.name - hostname of the server that has the metricbeat container)
 *   TAGS - to add extra information in tag field in elasticsearch
 *   ENABLE_METRICS_LOG - false by default, to remove internal metrics from log
+*   ADD_ETC_HOSTS - if given, will add the line to /etc/hosts of the container
 *   TZ - Timezone
 
 
