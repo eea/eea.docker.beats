@@ -41,4 +41,9 @@ if [ -n "${ENABLE_METRICS_LOG}" ] && [ "${ENABLE_METRICS_LOG}" == "True" ];  the
 fi
 
 
+if [ -n "${ADD_ETC_HOSTS}" ] && [ $(grep -c "${ADD_ETC_HOSTS}" /etc/hosts) -eq 0 ]; then
+      echo "${ADD_ETC_HOSTS}" >> /etc/hosts
+fi      
+
+
 exec /usr/local/bin/heartbeat-entrypoint "$@"
