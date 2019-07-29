@@ -35,4 +35,9 @@ generate_configuration.py
 
 chmod go-w /usr/share/metricbeat/metricbeat.yml
 
+if [ -n "${ADD_ETC_HOSTS}" ] && [ $(grep -c "${ADD_ETC_HOSTS}" /etc/hosts) -eq 0 ]; then
+      echo "${ADD_ETC_HOSTS}" >> /etc/hosts
+fi      
+
+
 exec /usr/local/bin/metricbeat-entrypoint "$@"
