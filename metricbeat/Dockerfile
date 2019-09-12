@@ -1,4 +1,4 @@
-FROM docker.elastic.co/beats/metricbeat:6.6.1
+FROM docker.elastic.co/beats/metricbeat:6.8.3
 USER root
 RUN yum install -y python-yaml
 RUN mv /usr/local/bin/docker-entrypoint /usr/local/bin/metricbeat-entrypoint 
