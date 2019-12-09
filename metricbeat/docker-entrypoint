@@ -6,15 +6,32 @@ if [ -n "$CONFIG" ]; then
 
 fi
 
-get_metadata(){
+get_host_metadata(){
+   
+   count=10
+   timeout=10
+
+   #Hosts do not contain spaces, check if host is empty or contains spaces
+   while ([[ "$result" =~ \  ]] || [ -z "$result" ]) && [ $count -gt 0 ]; do
+      result=$(curl -s http://rancher-metadata/latest/self/host/hostname)
+      if [[ "$result" =~ \  ]] || [ -z "$result" ]; then
+        let count=$count-1
+        sleep $timeout
+      fi
+   done
+
+}
+
+
+get_env_metadata(){
    
    result='Not found' 
-   count=5
-   timeout=5
+   count=10
+   timeout=10
    
-   while [ "$result" == "Not found" ] && [ $count -gt 0 ]; do
-      result=$(curl -s $1)
-      if [ "$result" == "Not found" ]; then
+   while ([[ "$result" == "Not found" ]] || [ -z "$result" ]) && [ $count -gt 0 ]; do
+      result=$(curl -s http://rancher-metadata/latest/self/stack/environment_name)
+      if [[ "$result" == "Not found" ]] || [ -z "$result" ];  then
         let count=$count-1
         sleep $timeout
       fi
@@ -24,10 +41,10 @@ get_metadata(){
 
 if [ -n "${RANCHER_METADATA}" ]; then
      
-     get_metadata http://rancher-metadata/latest/self/host/hostname
+     get_host_metadata 
      export HOSTNAME=$result
      
-     get_metadata http://rancher-metadata/latest/self/stack/environment_name
+     get_env_metadata 
      export RANCHER_ENV=$result
 fi
     
