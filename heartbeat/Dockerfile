@@ -1,4 +1,4 @@
-FROM docker.elastic.co/beats/heartbeat:7.12.1
+FROM docker.elastic.co/beats/heartbeat:7.15.1
 USER root
 RUN mv /usr/local/bin/docker-entrypoint /usr/local/bin/heartbeat-entrypoint 
 COPY docker-entrypoint /usr/local/bin/docker-entrypoint
