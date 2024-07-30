@@ -9,7 +9,7 @@ Based on docker.elastic.co/beats/metricbeat with a default configuration enabled
 
 ### Documentation
 
-https://www.elastic.co/guide/en/beats/metricbeat/current/index.html
+https://www.elastic.co/guide/en/beats/metricbeat/7.17/index.html
 
 ### Default configuration
 
@@ -37,32 +37,6 @@ Needs to be done only once, from shell command on the container. For a kibana th
 
     ./metricbeat setup -E setup.kibana.host=kibana.devel2cph.eea.europa.eu:443 -E setup.kibana.protocol="https" --dashboards
 
-## Heartbeat
-
-Based on docker.elastic.co/beats/heartbeat. Can run checks on icmp, tcp or http. 
-
-### Documentation
-
-https://www.elastic.co/guide/en/beats/heartbeat/current/index.html
-
-### Configuration
-
-Needs a configuration file or variable to run
-
-
-### Environment variables
-
-*   CONFIG - to set-up a configuration
-*   ES_URL - elasticsearch url
-*   ES_USER - elasticsearch username for authentification in elasticsearch
-*   ES_PASSWORD - elasticsearch user password
-*   KIBANA_URL - kibana url, can be provided for dashboard creation, but is not necessary
-
-### Setting up kibana dashboards
-
-Needs to be done only once, from shell command on the container. For a kibana that runs on https:
-
-    ./heartbeat setup -E setup.kibana.host=kibana.devel2cph.eea.europa.eu:443 -E setup.kibana.protocol="https" --dashboards
 
 ## Setting up elasticsearch stack
 
@@ -146,16 +120,6 @@ Default values are already set in rancher, you only need to add the elasticsearc
 
 Upgrade/rollback is done the standard way.
 
-
-### Heartbeat - rancher
-
-You only need one container for all your monitoring.
-
-To prepare the deploy, you need to request access from the container to the elasticsearch url and the urls you will be monitoring.
-
-To deploy, use this template: https://github.com/eea/eea.rancher.catalog/tree/master/infra-templates/heartbeat
-
-You need to set the elasticsearch password, and provide the configuration. To disable logging, please include `logging.metrics.enabled: false` line in the configuration.
 
 #### Upgrade
 
