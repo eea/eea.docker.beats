@@ -1,4 +1,4 @@
-FROM docker.elastic.co/beats/metricbeat:7.17.22
+FROM docker.elastic.co/beats/metricbeat:7.17.23
 USER root
 RUN apt-get update -q \
  && apt-get install -y python python-yaml \
